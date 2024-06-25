@@ -716,30 +716,30 @@ impl DescriptorProto {
 //             if !field.is_repeated() {
 //                 stmts.push(field.value_check_stmt(ctx, accessor_fn))
 //             }
-            if field.has_oneof_index() {
-                stmts.push(crate::if_stmt!(
-                    crate::call_expr!(
-                        crate::member_expr!("oneof", "has"),
-                        vec![crate::expr_or_spread!(
-                            crate::lit_num!(field.oneof_index()).into()
-                        )]
-                    ),
-                    crate::throw_stmt!(crate::new_expr!(
-                        quote_ident!("Error").into(),
-                        vec![crate::expr_or_spread!(crate::lit_str!(format!(
-                            "duplicate oneof field {}",
-                            field.json_key_name()
-                        ))
-                        .into())]
-                    ))
-                ));
-                stmts.push(crate::expr_stmt!(crate::call_expr!(
-                    crate::member_expr!("oneof", "add"),
-                    vec![crate::expr_or_spread!(
-                        crate::lit_num!(field.oneof_index()).into()
-                    )]
-                )))
-            }
+            // if field.has_oneof_index() {
+            //     stmts.push(crate::if_stmt!(
+            //         crate::call_expr!(
+            //             crate::member_expr!("oneof", "has"),
+            //             vec![crate::expr_or_spread!(
+            //                 crate::lit_num!(field.oneof_index()).into()
+            //             )]
+            //         ),
+            //         crate::throw_stmt!(crate::new_expr!(
+            //             quote_ident!("Error").into(),
+            //             vec![crate::expr_or_spread!(crate::lit_str!(format!(
+            //                 "duplicate oneof field {}",
+            //                 field.json_key_name()
+            //             ))
+            //             .into())]
+            //         ))
+            //     ));
+            //     stmts.push(crate::expr_stmt!(crate::call_expr!(
+            //         crate::member_expr!("oneof", "add"),
+            //         vec![crate::expr_or_spread!(
+            //             crate::lit_num!(field.oneof_index()).into()
+            //         )]
+            //     )))
+            // }
             if field.is_map(ctx) {
                 // nothing
                 stmts.push(crate::expr_stmt!(value_expr))
@@ -821,19 +821,19 @@ impl DescriptorProto {
 
         ];
 
-        let mut has_oneof = false;
-        for field in self.field.clone() {
-            if field.has_oneof_index() {
-                has_oneof = true;
-                break;
-            }
-        }
-        if has_oneof {
-            statements.push(Stmt::Decl(crate::const_decl!(
-                "oneof",
-                crate::new_expr!(Expr::Ident(quote_ident!("Set")))
-            )));
-        }
+        // let mut has_oneof = false;
+        // for field in self.field.clone() {
+        //     if field.has_oneof_index() {
+        //         has_oneof = true;
+        //         break;
+        //     }
+        // }
+        // if has_oneof {
+        //     statements.push(Stmt::Decl(crate::const_decl!(
+        //         "oneof",
+        //         crate::new_expr!(Expr::Ident(quote_ident!("Set")))
+        //     )));
+        // }
         let mut class_member_vec: Vec<ClassMember> = [].to_vec();
         let mut cur_field_vec = Vec::new();
         let mut cur_method_index = 0;

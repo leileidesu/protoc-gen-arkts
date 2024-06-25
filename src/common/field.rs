@@ -62,11 +62,12 @@ impl FieldDescriptorProto {
 
 impl FieldDescriptorProto {
     pub fn prop_name(&self) -> String {
-        if self.has_oneof_index() {
-            format!("#_{}", self.name())
-        } else {
-            self.name().to_string()
-        }
+        self.name().to_string()
+        // if self.has_oneof_index() {
+        //     format!("#_{}", self.name())
+        // } else {
+        //     self.name().to_string()
+        // }
     }
 
     pub fn default_value_bin_expr(&self, ctx: &mut Context, accessor: FieldAccessorFn) -> Expr {

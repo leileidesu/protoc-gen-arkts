@@ -2379,6 +2379,8 @@ dependencies = [
 [[package]]
 name = "protobuf-parse"
 version = "3.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "96cb37955261126624a25b5e6bda40ae34cf3989d52a783087ca6091b29b5642"
 dependencies = [
  "anyhow",
  "indexmap 1.9.1",

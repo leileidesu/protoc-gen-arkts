@@ -1,4 +1,5 @@
- /**
+ use protobuf::plugin::code_generator_response;
+/**
   * Copyright 2024 ByteDance and/or its affiliates
   *
   * Original Files：protoc-gen-ts (https://github.com/thesayyn/protoc-gen-ts)
@@ -77,6 +78,7 @@ pub fn compile(buffer: Vec<u8>) -> Vec<u8> {
 
     let mut response = CodeGeneratorResponse::new();
     response.file = outputs.lock().unwrap().to_vec();
+    response.supported_features = Some(code_generator_response::Feature::FEATURE_PROTO3_OPTIONAL as u64);
 
     response.write_to_bytes().unwrap()
 }
