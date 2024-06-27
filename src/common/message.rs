@@ -191,9 +191,7 @@ where
         // members.push(self.print_unknown_fields());
 
         for member in self.field.clone() {
-            if member.has_oneof_index() &&  member.proto3_optional(){
                 members.push(member.print_prop(ctx, runtime));
-            }
             if member.has_oneof_index() && ! member.proto3_optional(){
                 let other_oneofs = self.get_oneof_fields(&member);
                 members.push(member.print_oneof_getter(ctx, runtime));
